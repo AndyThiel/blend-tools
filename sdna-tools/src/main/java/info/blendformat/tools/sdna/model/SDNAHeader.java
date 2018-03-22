@@ -58,12 +58,10 @@ public class SDNAHeader implements Serializable {
 
     @Override
     public String toString() {
-        return new StringBuilder()
-                .append("SDNAHeader{")
-                .append("identifier='").append(identifier).append('\'')
-                .append(", codePointerSize=").append(codePointerSize)
-                .append(", codeEndianness=").append(codeEndianness)
-                .append(", codeVersion=").append(Arrays.toString(codeVersion))
-                .append('}').toString();
+        return String.format("SDNAHeader{identifier='%s', codePointerSize=%s, codeEndianness=%s, codeVersion=%s}",
+                identifier,
+                codePointerSize,
+                codeEndianness,
+                Arrays.toString(codeVersion));
     }
 }

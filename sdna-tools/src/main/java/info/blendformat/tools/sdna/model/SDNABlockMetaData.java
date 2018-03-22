@@ -52,13 +52,11 @@ public class SDNABlockMetaData implements Serializable {
 
     @Override
     public String toString() {
-        return new StringBuilder()
-                .append("SDNABlockMetaData{")
-                .append("code='").append(code).append('\'')
-                .append(", size=").append(size)
-                .append(", address=").append(address)
-                .append(", sdnaIndex=").append(sdnaIndex)
-                .append(", count=").append(count)
-                .append('}').toString();
+        return String.format("SDNABlockMetaData{code='%s', size=%d, address=%d, sdnaIndex=%d, count=%d}",
+                code,
+                size,
+                address,
+                sdnaIndex,
+                count);
     }
 }

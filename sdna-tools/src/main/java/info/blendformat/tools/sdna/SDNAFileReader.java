@@ -16,9 +16,7 @@ public class SDNAFileReader {
                                 String path,
                                 String fileName) throws IOException {
         return read(config,
-                new StringBuilder()
-                        .append(path).append(File.separator).append(fileName)
-                        .toString());
+                path + File.separator + fileName);
     }
 
     public SDNAFileContent read(ReaderConfig config,
@@ -40,9 +38,7 @@ public class SDNAFileReader {
                                       String path,
                                       String fileName) throws IOException {
         return extractCatalog(config,
-                new StringBuilder()
-                        .append(path).append(File.separator).append(fileName)
-                        .toString());
+                path + File.separator + fileName);
     }
 
     public SDNACatalog extractCatalog(ReaderConfig config,

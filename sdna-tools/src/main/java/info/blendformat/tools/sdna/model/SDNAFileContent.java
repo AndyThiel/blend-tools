@@ -25,10 +25,8 @@ public class SDNAFileContent implements Serializable {
 
     @Override
     public String toString() {
-        return new StringBuilder()
-                .append("SDNAFileContent{")
-                .append("header=").append(header)
-                .append("catalog=").append(catalog)
-                .append('}').toString();
+        return String.format("SDNAFileContent{header=%scatalog=%s}",
+                header,
+                catalog);
     }
 }
