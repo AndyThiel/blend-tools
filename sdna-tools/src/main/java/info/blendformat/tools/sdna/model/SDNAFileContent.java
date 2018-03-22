@@ -4,7 +4,16 @@ import java.io.Serializable;
 
 public class SDNAFileContent implements Serializable {
 
+    private SDNAHeader header;
     private SDNACatalog catalog;
+
+    public SDNAHeader getHeader() {
+        return header;
+    }
+
+    public void setHeader(SDNAHeader header) {
+        this.header = header;
+    }
 
     public SDNACatalog getCatalog() {
         return catalog;
@@ -18,6 +27,7 @@ public class SDNAFileContent implements Serializable {
     public String toString() {
         return new StringBuilder()
                 .append("SDNAFileContent{")
+                .append("header=").append(header)
                 .append("catalog=").append(catalog)
                 .append('}').toString();
     }
