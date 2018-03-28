@@ -5,13 +5,6 @@ import java.nio.ByteOrder;
 
 public class NumberValueParser {
 
-    public static final int LENGTH_FLOAT = 4;
-    public static final int LENGTH_DOUBLE = 8;
-
-    public static final int LENGTH_SHORT = 2;
-    public static final int LENGTH_INT = 4;
-    public static final int LENGTH_LONG = 8;
-
     public String formatByteAsHexString(byte currentByte) {
         return String.format("%02X", currentByte);
     }

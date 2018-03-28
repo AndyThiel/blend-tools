@@ -1,14 +1,25 @@
 package info.blendformat.tools.sdna.model;
 
+import com.google.gson.JsonObject;
+
 import java.io.Serializable;
+import java.text.MessageFormat;
 
 public class SDNABlockMetaData implements Serializable {
+
+    public static final String FIELDID_CODE = "code";
+    public static final String FIELDID_SIZE = "size";
+    public static final String FIELDID_ADDRESS = "address";
+    public static final String FIELDID_SDNAINDEX = "sdnaIndex";
+    public static final String FIELDID_COUNT = "count";
 
     private String code;
     private int size;
     private long address;
     private int sdnaIndex;
     private int count;
+
+    private JsonObject extendedMetaDataValues;
 
     public String getCode() {
         return code;
@@ -50,13 +61,19 @@ public class SDNABlockMetaData implements Serializable {
         this.count = count;
     }
 
+    public JsonObject getExtendedMetaDataValues() {
+        return extendedMetaDataValues;
+    }
+
+    public void setExtendedMetaDataValues(JsonObject extendedMetaDataValues) {
+        this.extendedMetaDataValues = extendedMetaDataValues;
+    }
+
     @Override
     public String toString() {
-        return String.format("SDNABlockMetaData{code='%s', size=%d, address=%d, sdnaIndex=%d, count=%d}",
-                code,
-                size,
-                address,
-                sdnaIndex,
-                count);
+        return MessageFormat.format(
+                "SDNABlockMetaData'{'code=''{0}'', size={1}, address={2}, sdnaIndex={3}, count={4}, extendedMetaDataValues={5}'}'",
+                code, size, address, sdnaIndex, count,
+                extendedMetaDataValues);
     }
 }

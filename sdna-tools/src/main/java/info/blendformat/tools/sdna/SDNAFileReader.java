@@ -3,6 +3,9 @@ package info.blendformat.tools.sdna;
 import info.blendformat.tools.sdna.model.SDNACatalog;
 import info.blendformat.tools.sdna.model.SDNAFileContent;
 import info.blendformat.tools.sdna.reader.*;
+import info.blendformat.tools.sdna.reader.events.FileStreamEventSubscriber;
+import info.blendformat.tools.sdna.reader.events.SDNACatalogSubscriber;
+import info.blendformat.tools.sdna.reader.events.SDNAFileContentSubscriber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,15 +73,21 @@ public class SDNAFileReader {
                                        BufferedInputStream inputStream)
             throws IOException {
 
+        LOGGER.info("Executing extractCatalog ...");
+
         SDNACatalogSubscriber subscriber = new SDNACatalogSubscriber();
         readFileStream(config, inputStream, subscriber);
         SDNACatalog content = subscriber.getCatalog();
+
         return content;
     }
 
     private void readFileStream(ReaderConfig config,
                                 BufferedInputStream inputStream,
                                 FileStreamEventSubscriber subscriber) throws IOException {
+
+        LOGGER.info("Executing readFileStream ...");
+
         SDNAFileStreamReader fileStreamReader = new SDNAFileStreamReader();
         fileStreamReader.addSubscriber(subscriber);
         fileStreamReader.readFile(config, inputStream);

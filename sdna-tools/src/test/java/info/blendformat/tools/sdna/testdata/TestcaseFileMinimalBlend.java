@@ -1,7 +1,5 @@
 package info.blendformat.tools.sdna.testdata;
 
-import info.blendformat.tools.sdna.parser.NumberValueParser;
-
 import java.io.ByteArrayInputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

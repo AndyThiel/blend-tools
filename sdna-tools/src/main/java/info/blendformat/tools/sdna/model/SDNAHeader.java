@@ -1,67 +1,66 @@
 package info.blendformat.tools.sdna.model;
 
+import com.google.gson.JsonObject;
+
 import java.io.Serializable;
-import java.util.Arrays;
+import java.text.MessageFormat;
 
 public class SDNAHeader implements Serializable {
 
+    public static final String FIELDID_IDENTIFIER = "identifier";
+    public static final String FIELDID_POINTERSIZE = "pointerSize";
+    public static final String FIELDID_ENDIANNESS = "endianness";
+
     public static final char CODE_LITTLE_ENDIAN = 'v';
-    public static final char CODE_BIG_ENDIAN = 'V';
-    public static final char CODE_POINTERSIZE_4 = '_';
     public static final char CODE_POINTERSIZE_8 = '-';
+    // public static final char CODE_POINTERSIZE_4 = '_';
+    // public static final char CODE_BIG_ENDIAN = 'V';
 
     private String identifier;
 
-    private char codePointerSize;
-    private char codeEndianness;
-    private char[] codeVersion;
+    private short pointerSize = 8;
 
-    public int getPointerSize() {
-        return (SDNAHeader.CODE_POINTERSIZE_8 == codePointerSize) ? 8 : 4;
-    }
+    private boolean isLittleEndian = true;
 
-    public boolean isLittleEndian() {
-        return (CODE_LITTLE_ENDIAN == codeEndianness);
+    private JsonObject extendedHeaderValues;
+
+    public String getIdentifier() {
+        return identifier;
     }
 
     public void setIdentifier(String identifier) {
         this.identifier = identifier;
     }
 
-    public String getIdentifier() {
-        return identifier;
+    public Short getPointerSize() {
+        return pointerSize;
     }
 
-    public char getCodePointerSize() {
-        return codePointerSize;
+    public void setPointerSize(short pointerSize) {
+        this.pointerSize = pointerSize;
     }
 
-    public void setCodePointerSize(char codePointerSize) {
-        this.codePointerSize = codePointerSize;
+    public boolean isLittleEndian() {
+        return isLittleEndian;
     }
 
-    public char getCodeEndianness() {
-        return codeEndianness;
+    public void setLittleEndian(boolean littleEndian) {
+        isLittleEndian = littleEndian;
     }
 
-    public void setCodeEndianness(char codeEndianness) {
-        this.codeEndianness = codeEndianness;
+    public JsonObject getExtendedHeaderValues() {
+        return extendedHeaderValues;
     }
 
-    public char[] getCodeVersion() {
-        return codeVersion;
-    }
-
-    public void setCodeVersion(char[] codeVersion) {
-        this.codeVersion = codeVersion;
+    public void setExtendedHeaderValues(JsonObject extendedHeaderValues) {
+        this.extendedHeaderValues = extendedHeaderValues;
     }
 
     @Override
     public String toString() {
-        return String.format("SDNAHeader{identifier='%s', codePointerSize=%s, codeEndianness=%s, codeVersion=%s}",
-                identifier,
-                codePointerSize,
-                codeEndianness,
-                Arrays.toString(codeVersion));
+        return MessageFormat.format(
+                "SDNAHeader'{'identifier=''{0}'', pointerSize={1}, isLittleEndian={2}, extendedHeaderValues={3}'}'",
+                identifier, pointerSize, isLittleEndian,
+                extendedHeaderValues);
     }
 }

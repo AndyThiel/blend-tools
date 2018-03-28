@@ -2,5 +2,5 @@ package info.blendformat.tools.sdna.writer;
 
 import java.io.Serializable;
 
-public class WriterConfig implements Serializable {
+public interface WriterConfig extends Serializable {
 }

@@ -1,7 +1,7 @@
 package info.blendformat.tools.sdna;
 
 import info.blendformat.tools.sdna.model.SDNAFileContent;
-import info.blendformat.tools.sdna.reader.ReaderConfig;
+import info.blendformat.tools.sdna.writer.WriterConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,9 +13,9 @@ public class SDNAFileWriter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SDNAFileReader.class);
 
-    public void write(ReaderConfig config,
-                     String path, String fileName,
-                     SDNAFileContent content) throws IOException {
+    public void write(WriterConfig config,
+                      String path, String fileName,
+                      SDNAFileContent content) throws IOException {
         InputStream inputStream = getByteStream(config, content);
         if (null == inputStream) {
             return;
@@ -23,7 +23,7 @@ public class SDNAFileWriter {
         // TODO Implement
     }
 
-    public void write(ReaderConfig config,
+    public void write(WriterConfig config,
                       OutputStream outputStream,
                       SDNAFileContent content) throws IOException {
         InputStream inputStream = getByteStream(config, content);
@@ -33,7 +33,7 @@ public class SDNAFileWriter {
         // TODO Implement
     }
 
-    public InputStream getByteStream(ReaderConfig config,
+    public InputStream getByteStream(WriterConfig config,
                                      SDNAFileContent content) throws IOException {
         // TODO Implement
         return null;

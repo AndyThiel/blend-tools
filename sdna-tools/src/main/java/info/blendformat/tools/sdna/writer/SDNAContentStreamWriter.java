@@ -11,7 +11,7 @@ public class SDNAContentStreamWriter implements ContentStreamEventPublisher {
     private final ArrayList<ContentStreamEventSubscriber> subscribers
             = new ArrayList<>();
 
-    private InputStream writeContent(WriterConfig config,
+    private InputStream writeContent(WriterConfigDefault config,
                                      SDNAFileContent content) throws IOException {
         return null;
     }

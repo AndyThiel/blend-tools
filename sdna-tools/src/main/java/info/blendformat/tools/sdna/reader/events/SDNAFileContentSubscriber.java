@@ -1,4 +1,4 @@
-package info.blendformat.tools.sdna.reader;
+package info.blendformat.tools.sdna.reader.events;
 
 import info.blendformat.tools.sdna.model.*;
 

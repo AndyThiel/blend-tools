@@ -1,24 +1,39 @@
 package info.blendformat.tools.sdna.reader;
 
+import info.blendformat.tools.sdna.model.SDNACatalog;
+import info.blendformat.tools.sdna.model.SDNAStructDescriptor;
+
 import java.io.Serializable;
 
-public class ReaderConfig implements Serializable {
+public interface ReaderConfig extends Serializable {
 
-    private int sizeIdentifier = 7;
+    short POINTERSIZE_UNKNOWN = -1;
 
-    public int getSizeIdentifier() {
-        return sizeIdentifier;
-    }
+    short getIdentifierSize();
 
-    public void setSizeIdentifier(int sizeIdentifier) {
-        this.sizeIdentifier = sizeIdentifier;
-    }
+    void setIdentifierSize(short identifierSize);
 
-    @Override
-    public String toString() {
-        return new StringBuilder()
-                .append("ReaderConfig{")
-                .append("sizeIdentifier=").append(sizeIdentifier)
-                .append('}').toString();
-    }
+    short getMetadataCodeSize();
+
+    void setMetadataCodeSize(short metadataCodeSize);
+
+    SDNAStructDescriptor getBaseHeaderDescriptor();
+
+    SDNAStructDescriptor getExtendedHeaderDescriptor();
+
+    void setExtendedHeaderDescriptor(SDNAStructDescriptor extendedHeaderDescriptor);
+
+    SDNAStructDescriptor getBaseMetaDataDescriptor(short pointerSize);
+
+    SDNAStructDescriptor getExtendedMetaDataDescriptor();
+
+    void setExtendedMetaDataDescriptor(SDNAStructDescriptor extendedMetaDataDescriptor);
+
+    SDNACatalog getInitialCatalog();
+
+    void setInitialCatalog(SDNACatalog initialCatalog);
+
+    String getCatalogCode();
+
+    void setCatalogCode(String catalogCode);
 }
