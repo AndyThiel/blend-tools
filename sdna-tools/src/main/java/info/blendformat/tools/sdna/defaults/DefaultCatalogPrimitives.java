@@ -18,17 +18,17 @@ public class DefaultCatalogPrimitives extends SDNACatalog {
     public static final String PRIMITIVE_UINT64_T = "uint64_t";
 
     public DefaultCatalogPrimitives() {
-        super.registerSize("void", 0);
-        super.registerSize("char", 1);
-        super.registerSize("uchar", 1);
-        super.registerSize("short", 2);
-        super.registerSize("ushort", 2);
-        super.registerSize("int", 4);
-        super.registerSize("long", 4);
-        super.registerSize("ulong", 4);
-        super.registerSize("float", 4);
-        super.registerSize("double", 8);
-        super.registerSize("int64_t", 8);
-        super.registerSize("uint64_t", 8);
+        super.registerSize(PRIMITIVE_VOID, 0);
+        super.registerSize(PRIMITIVE_CHAR, 1);
+        super.registerSize(PRIMITIVE_UCHAR, 1);
+        super.registerSize(PRIMITIVE_SHORT, 2);
+        super.registerSize(PRIMITIVE_USHORT, 2);
+        super.registerSize(PRIMITIVE_INT, 4);
+        super.registerSize(PRIMITIVE_LONG, 4);
+        super.registerSize(PRIMITIVE_ULONG, 4);
+        super.registerSize(PRIMITIVE_FLOAT, 4);
+        super.registerSize(PRIMITIVE_DOUBLE, 8);
+        super.registerSize(PRIMITIVE_INT64_T, 8);
+        super.registerSize(PRIMITIVE_UINT64_T, 8);
     }
 }

@@ -113,6 +113,11 @@ public enum FieldType {
             return FieldType.POINTER;
         } else if (fieldCode.startsWith("(*")) {
             return FieldType.FUNCTIONPOINTER;
+        } else if (PATTERN_ARRAY.matcher(fieldCode).matches()) {
+            if (DefaultCatalogPrimitives.PRIMITIVE_CHAR.equals(structType)) {
+                return FieldType.STRING;
+            }
+            return FieldType.ARRAY;
         }
 
         switch (structType) {
@@ -127,11 +132,7 @@ public enum FieldType {
             case DefaultCatalogPrimitives.PRIMITIVE_UINT64_T:
                 return FieldType.NUMBER;
             case DefaultCatalogPrimitives.PRIMITIVE_CHAR:
-                if (1 < structSize) {
-                    return FieldType.STRING;
-                } else {
-                    return FieldType.CHAR;
-                }
+                return FieldType.CHAR;
             default:
                 return FieldType.STRUCT;
         }

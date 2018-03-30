@@ -141,7 +141,6 @@ public class SDNAFileCatalogReader {
 
             String type = types.get(structTypeIndex);
             descriptor.setType(type);
-            sdnaCatalog.registerStruct(indexStruct, type);
 
             ArrayList<SDNAFieldDescriptor> fieldDescriptors = new ArrayList<>();
             for (int indexField = 0; indexField < countFields; indexField++) {
@@ -171,8 +170,7 @@ public class SDNAFileCatalogReader {
                 fieldDescriptors.add(fieldDescriptor);
             }
             descriptor.setFieldDescriptors(fieldDescriptors);
-
-            sdnaCatalog.registerStructDescriptor(type, descriptor);
+            sdnaCatalog.registerStruct(indexStruct, type, descriptor);
         }
     }
 

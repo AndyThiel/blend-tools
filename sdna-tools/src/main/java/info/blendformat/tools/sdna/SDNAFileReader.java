@@ -73,7 +73,7 @@ public class SDNAFileReader {
                                        BufferedInputStream inputStream)
             throws IOException {
 
-        LOGGER.info("Executing extractCatalog ...");
+        LOGGER.debug("Executing extractCatalog ...");
 
         SDNACatalogSubscriber subscriber = new SDNACatalogSubscriber();
         readFileStream(config, inputStream, subscriber);
@@ -86,7 +86,7 @@ public class SDNAFileReader {
                                 BufferedInputStream inputStream,
                                 FileStreamEventSubscriber subscriber) throws IOException {
 
-        LOGGER.info("Executing readFileStream ...");
+        LOGGER.debug("Executing readFileStream ...");
 
         SDNAFileStreamReader fileStreamReader = new SDNAFileStreamReader();
         fileStreamReader.addSubscriber(subscriber);

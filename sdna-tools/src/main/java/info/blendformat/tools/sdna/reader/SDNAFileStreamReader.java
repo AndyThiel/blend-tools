@@ -45,11 +45,10 @@ public class SDNAFileStreamReader implements FileStreamEventPublisher {
 
         SDNABlockMetaData metaData;
         final String catalogCode = config.getCatalogCode();
-        LOGGER.info("... starting meta data loop ...");
         while (null != (metaData = metaDataReader.readMetaData(
                 config, header, inputStream))) {
 
-            LOGGER.info("... reading: " + metaData + " ...");
+            LOGGER.debug("... reading: " + metaData + " ...");
 
             fireBlockMetaDataRead(metaData);
 
@@ -57,7 +56,7 @@ public class SDNAFileStreamReader implements FileStreamEventPublisher {
             fireBlockDataRead(metaData, data);
 
             if (catalogCode.equals(metaData.getCode())) {
-                LOGGER.info("... calling catalogReader.readCatalog ...");
+                LOGGER.debug("... calling catalogReader.readCatalog ...");
                 SDNACatalog catalog = catalogReader.readCatalog(
                         config, header, metaData, data);
                 fireSDNACatalogRead(catalog);

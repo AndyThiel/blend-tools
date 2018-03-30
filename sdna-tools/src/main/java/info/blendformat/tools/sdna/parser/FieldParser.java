@@ -20,24 +20,20 @@ public class FieldParser {
         this.structParser = structParser;
     }
 
-    public JsonArray readFieldStructsAsArray(short pointerSize,
-                                             SDNACatalog catalog,
-                                             FieldType fieldType,
-                                             String structType,
-                                             String code,
-                                             int amount,
-                                             byte[] fieldValueBuffer,
-                                             boolean littleEndian) {
+    public JsonArray readArray(SDNACatalog catalog,
+                               FieldType fieldType,
+                               String structType,
+                               int arraySize,
+                               byte[] fieldValueBuffer,
+                               short pointerSize,
+                               boolean littleEndian) {
 
         JsonArray result = new JsonArray();
         Integer structTypeSize = catalog.getSize(structType);
 
-        SDNAStructDescriptor structDescriptor
-                = catalog.getStructDescriptor(structType);
+        int currentOffset = 0;
 
-        for (int index = 0; index < amount; index++) {
-
-            int currentOffset = (index * structTypeSize);
+        for (int indexElement = 0; indexElement < arraySize; indexElement++) {
 
             byte[] valueBuffer = Arrays.copyOfRange(
                     fieldValueBuffer,
@@ -62,24 +58,12 @@ public class FieldParser {
                             valueBuffer));
                     break;
                 case STRUCT:
+                    SDNAStructDescriptor structDescriptor
+                            = catalog.getStructDescriptor(structType);
                     result.add(structParser.parseStruct(
                             pointerSize,
                             catalog,
                             structDescriptor,
-                            valueBuffer,
-                            littleEndian));
-                    break;
-                case ARRAY:
-                    result.add(readFieldStructsAsArray(
-                            pointerSize,
-                            catalog,
-                            FieldType.getByFieldMetaData(
-                                    structType,
-                                    structTypeSize,
-                                    code),
-                            structType,
-                            code,
-                            FieldType.getArraySize(code),
                             valueBuffer,
                             littleEndian));
                     break;
@@ -88,6 +72,8 @@ public class FieldParser {
                 case FUNCTIONPOINTER:
                     break;
             }
+
+            currentOffset += structTypeSize;
         }
 
         return result;

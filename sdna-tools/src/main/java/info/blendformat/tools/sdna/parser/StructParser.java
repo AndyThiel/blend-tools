@@ -49,24 +49,22 @@ public class StructParser {
             FieldType fieldType = fieldDescriptor.getFieldType();
             String structType = fieldDescriptor.getStructType();
             String fieldCode = fieldDescriptor.getCode();
-            String code = fieldCode;
 
             SDNAStructDescriptor fieldStruct = catalog.getStructDescriptor(structType);
             int fieldStructSize = catalog.getSize(structType);
             String fieldName = fieldType.getFieldName(fieldStruct,
                     pointerSize,
                     fieldStructSize,
-                    code);
+                    fieldCode);
             Integer fieldSize = fieldType.getSize(fieldStruct,
                     pointerSize,
                     fieldStructSize,
-                    code);
+                    fieldCode);
 
             fieldValueBuffer = Arrays.copyOfRange(
                     buffer,
                     currentOffset,
                     (currentOffset + fieldSize));
-            currentOffset += fieldSize;
 
             switch (fieldType) {
                 case CHAR:
@@ -102,14 +100,16 @@ public class StructParser {
                     break;
                 case ARRAY:
                     result.add(fieldName,
-                            fieldParser.readFieldStructsAsArray(
-                                    pointerSize,
+                            fieldParser.readArray(
                                     catalog,
-                                    fieldType,
-                                    fieldDescriptor.getStructType(),
-                                    fieldCode,
+                                    FieldType.getByFieldMetaData(
+                                            structType,
+                                            fieldStructSize,
+                                            fieldName),
+                                    structType,
                                     FieldType.getArraySize(fieldCode),
                                     fieldValueBuffer,
+                                    pointerSize,
                                     littleEndian));
                     break;
                 case POINTER:
@@ -126,7 +126,7 @@ public class StructParser {
                             pointerAddress,
                             fieldName);
 
-                    if (pointerAddress.equals(Long.valueOf(0))) {
+                    if (pointerAddress.equals(0)) {
                         nullReferences.add(fieldValue);
                     } else {
                         references.add(fieldValue);
@@ -134,6 +134,8 @@ public class StructParser {
 
                     break;
             }
+
+            currentOffset += fieldSize;
         }
 
         result.add("nullReferences", nullReferences);

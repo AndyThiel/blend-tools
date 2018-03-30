@@ -29,9 +29,8 @@ public class SDNAFileReaderTest {
     @Test
     public void testReadLittleEndian() throws IOException {
 
-        LOGGER.info("Executing testReadLittleEndian ...");
+        LOGGER.debug("Executing testReadLittleEndian ...");
 
-        LOGGER.info("... reading file content");
         ReaderConfigDefault config = new ReaderConfigDefault();
         config.setCatalogCode("N/A");
         SDNAFileContent fileContent = fileReader.read(
@@ -44,9 +43,8 @@ public class SDNAFileReaderTest {
     @Test
     public void testReadBigEndian() throws IOException {
 
-        LOGGER.info("Executing testReadBigEndian ...");
+        LOGGER.debug("Executing testReadBigEndian ...");
 
-        LOGGER.info("... reading file content");
         ReaderConfigDefault config = new ReaderConfigDefault();
         config.setCatalogCode("N/A");
         SDNAFileContent fileContent = fileReader.read(
@@ -58,10 +56,6 @@ public class SDNAFileReaderTest {
 
     private void assertTestcaseMinimalBlendContent(SDNAFileContent fileContent,
                                                    boolean littleEndian) {
-
-        LOGGER.info("... executing assertTestcaseMinimalBlendContent ...");
-
-        assertNotNull("The file content is null", fileContent);
 
         SDNAHeader header = fileContent.getHeader();
         assertNotNull("The file header is null", fileContent);

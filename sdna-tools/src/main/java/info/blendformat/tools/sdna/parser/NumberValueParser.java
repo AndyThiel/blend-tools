@@ -6,7 +6,7 @@ import java.nio.ByteOrder;
 public class NumberValueParser {
 
     public String formatByteAsHexString(byte currentByte) {
-        return String.format("%02X", currentByte);
+        return String.format("0x%02X", currentByte);
     }
 
     public Float readFloat(byte[] buffer, boolean littleEndian) {

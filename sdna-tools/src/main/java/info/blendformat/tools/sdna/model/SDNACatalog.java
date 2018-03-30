@@ -20,21 +20,19 @@ public class SDNACatalog implements Serializable {
         return typeSizeMap.get(type);
     }
 
-    public SDNAStructDescriptor getStructDescriptor(String type) {
-        return typeStructDescriptorMap.get(type);
-    }
-
-    public String registerStruct(Integer index, String struct) {
-        return indexStructMap.put(index, struct);
-    }
-
     public Integer registerSize(String type, Integer size) {
         return typeSizeMap.put(type, size);
     }
 
-    public SDNAStructDescriptor registerStructDescriptor(
-            String type,
-            SDNAStructDescriptor structDescriptor) {
-        return typeStructDescriptorMap.put(type, structDescriptor);
+    public SDNAStructDescriptor getStructDescriptor(String type) {
+        return typeStructDescriptorMap.get(type);
+    }
+
+    public String registerStruct(Integer index,
+                                 String structType,
+                                 SDNAStructDescriptor structDescriptor) {
+        String previousStructType = indexStructMap.put(index, structType);
+        typeStructDescriptorMap.put(structType, structDescriptor);
+        return previousStructType;
     }
 }
