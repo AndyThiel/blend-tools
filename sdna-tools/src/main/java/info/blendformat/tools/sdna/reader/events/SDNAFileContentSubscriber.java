@@ -22,12 +22,11 @@ public class SDNAFileContentSubscriber implements FileStreamEventSubscriber {
 
     @Override
     public void onBlockMetaDataRead(SDNABlockMetaData metaData) {
-
     }
 
     @Override
     public void onBlockDataRead(SDNABlockMetaData metaData, byte[] data) {
-
+        fileContent.registerDataBlock(metaData, data);
     }
 
     @Override
@@ -36,6 +35,6 @@ public class SDNAFileContentSubscriber implements FileStreamEventSubscriber {
     }
 
     @Override
-    public void onReadProcessComplete(SDNAFileInfo fileInfo) {
+    public void onReadProcessComplete() {
     }
 }

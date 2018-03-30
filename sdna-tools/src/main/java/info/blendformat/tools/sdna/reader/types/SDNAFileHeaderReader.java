@@ -43,7 +43,6 @@ public class SDNAFileHeaderReader {
         SDNAStructDescriptor extendedHeaderDescriptor = config.getExtendedHeaderDescriptor();
         if (SDNAStructDescriptor.VALUE_NUMBER_UNKNOWN ==
                 extendedHeaderDescriptor.getSize()) {
-            System.out.println("Calculating size!");
             extendedHeaderDescriptor.calculateSize(
                     config.getInitialCatalog(),
                     header.getPointerSize());
@@ -57,7 +56,10 @@ public class SDNAFileHeaderReader {
         }
 
         buffer = new byte[extendedHeaderSize];
-        inputStream.read(buffer, 0, extendedHeaderSize);
+        int read = inputStream.read(buffer, 0, extendedHeaderSize);
+        if (read != extendedHeaderSize) {
+            throw new IllegalStateException();
+        }
 
         JsonObject extendedHeaderValues = structParser.parseStruct(
                 header.getPointerSize(),

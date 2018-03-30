@@ -2,7 +2,6 @@ package info.blendformat.tools.sdna.reader;
 
 import info.blendformat.tools.sdna.model.SDNABlockMetaData;
 import info.blendformat.tools.sdna.model.SDNACatalog;
-import info.blendformat.tools.sdna.model.SDNAFileInfo;
 import info.blendformat.tools.sdna.model.SDNAHeader;
 import info.blendformat.tools.sdna.reader.events.FileStreamEventPublisher;
 import info.blendformat.tools.sdna.reader.events.FileStreamEventSubscriber;
@@ -38,8 +37,6 @@ public class SDNAFileStreamReader implements FileStreamEventPublisher {
 
         fireReadProcessStarted();
 
-        SDNAFileInfo fileInfo = new SDNAFileInfo();
-
         SDNAHeader header = headerReader.readHeader(config, inputStream);
         fireHeaderRead(header);
 
@@ -63,7 +60,7 @@ public class SDNAFileStreamReader implements FileStreamEventPublisher {
             }
         }
 
-        fireReadProcessComplete(fileInfo);
+        fireReadProcessComplete();
     }
 
     @Override
@@ -112,9 +109,9 @@ public class SDNAFileStreamReader implements FileStreamEventPublisher {
     }
 
     @Override
-    public void fireReadProcessComplete(SDNAFileInfo fileInfo) {
+    public void fireReadProcessComplete() {
         for (FileStreamEventSubscriber subscriber : subscribers) {
-            subscriber.onReadProcessComplete(fileInfo);
+            subscriber.onReadProcessComplete();
         }
     }
 }

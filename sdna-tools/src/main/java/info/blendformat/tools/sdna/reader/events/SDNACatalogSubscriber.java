@@ -2,7 +2,6 @@ package info.blendformat.tools.sdna.reader.events;
 
 import info.blendformat.tools.sdna.model.SDNABlockMetaData;
 import info.blendformat.tools.sdna.model.SDNACatalog;
-import info.blendformat.tools.sdna.model.SDNAFileInfo;
 import info.blendformat.tools.sdna.model.SDNAHeader;
 
 public class SDNACatalogSubscriber implements FileStreamEventSubscriber {
@@ -35,6 +34,6 @@ public class SDNACatalogSubscriber implements FileStreamEventSubscriber {
     }
 
     @Override
-    public void onReadProcessComplete(SDNAFileInfo fileInfo) {
+    public void onReadProcessComplete() {
     }
 }
