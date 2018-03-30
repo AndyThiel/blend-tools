@@ -2,15 +2,14 @@ package info.blendformat.tools.sdna.reader.events;
 
 import info.blendformat.tools.sdna.defaults.DefaultCatalogPrimitives;
 import info.blendformat.tools.sdna.model.SDNABlockMetaData;
-import info.blendformat.tools.sdna.model.SDNACatalog;
 import info.blendformat.tools.sdna.model.SDNAFileContent;
 import info.blendformat.tools.sdna.model.SDNAHeader;
+import info.blendformat.tools.sdna.reader.AssertSDNAFileContent;
 import org.junit.Test;
 
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 public class SDNAFileContentSubscriberTest {
 
@@ -52,28 +51,22 @@ public class SDNAFileContentSubscriberTest {
         publisher.removeSubscriber(subscriber);
 
         SDNAFileContent fileContent = subscriber.getFileContent();
-        assertNotNull("A file content handle should have been read.",
+
+        AssertSDNAFileContent assertSDNAFileContent
+                = new AssertSDNAFileContent();
+        assertSDNAFileContent.assertFileContent(fileContent);
+        assertSDNAFileContent.assertIdentifierEquals(
+                "TESTER", fileContent);
+        assertSDNAFileContent.assertCatalogSize(
+                "ufloat",
+                12,
                 fileContent);
 
-        SDNAHeader fileHeader = fileContent.getHeader();
-        assertNotNull("An SDNA header should have been read.",
-                fileHeader);
-        assertEquals("TESTER", fileHeader.getIdentifier());
-
-        SDNACatalog fileCatalog = fileContent.getCatalog();
-        assertNotNull("A catalog should have been read.",
-                fileCatalog);
-        assertEquals(12, (int) fileCatalog.getSize("ufloat"));
-
         ArrayList<SDNABlockMetaData> metaDataList = fileContent.getMetaDataList();
-        ArrayList<byte[]> dataList = fileContent.getDataList();
-
-        assertEquals(2, metaDataList.size());
-        assertEquals(2, dataList.size());
-
         assertEquals("TST1", metaDataList.get(0).getCode());
         assertEquals("TST2", metaDataList.get(1).getCode());
 
+        ArrayList<byte[]> dataList = fileContent.getDataList();
         assertEquals('B', (char) dataList.get(0)[0]);
         assertEquals('L', (char) dataList.get(1)[0]);
     }

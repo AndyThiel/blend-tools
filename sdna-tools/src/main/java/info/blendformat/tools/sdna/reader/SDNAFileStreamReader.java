@@ -35,13 +35,14 @@ public class SDNAFileStreamReader implements FileStreamEventPublisher {
     public void readFile(ReaderConfig config,
                          BufferedInputStream inputStream) throws IOException {
 
+        final String catalogCode = config.getCatalogCode();
+
         fireReadProcessStarted();
 
         SDNAHeader header = headerReader.readHeader(config, inputStream);
         fireHeaderRead(header);
 
         SDNABlockMetaData metaData;
-        final String catalogCode = config.getCatalogCode();
         while (null != (metaData = metaDataReader.readMetaData(
                 config, header, inputStream))) {
 

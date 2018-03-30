@@ -54,10 +54,6 @@ public class TestcaseFileMinimalBlend {
             .putInt(0)
             .putInt(1);
 
-    // private final ByteBuffer contentGlobal = ByteBuffer.allocate(SIZE_BLOCK_GLOBAL);
-    // private final ByteBuffer contentScene = ByteBuffer.allocate(SIZE_BLOCK_SCENE);
-    // private final ByteBuffer contentCatalog = ByteBuffer.allocate(SIZE_BLOCK_CATALOG);
-
     public ByteArrayInputStream toInputStream() {
 
         byte[] contentGlobal = new byte[SIZE_BLOCK_GLOBAL];
@@ -72,13 +68,10 @@ public class TestcaseFileMinimalBlend {
                 .put(header)
                 .put(metaDataGlobal.array())
                 .put(contentGlobal)
-                // .put(contentGlobal.array())
                 .put(metaDataScene.array())
                 .put(contentScene)
-                // .put(contentScene.array())
                 .put(metaDataCatalog.array())
                 .put(contentCatalog)
-                // .put(contentCatalog.array())
                 .put(metaDataEnd.array());
 
         return new ByteArrayInputStream(fullFileBuffer.array());
