@@ -20,6 +20,8 @@ public class SDNAFileStreamReader implements FileStreamEventPublisher {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SDNAFileStreamReader.class);
 
+    private static final String CODE_ENDBLOCK = "ENDB";
+
     private final ArrayList<FileStreamEventSubscriber> subscribers
             = new ArrayList<>();
 
@@ -40,13 +42,12 @@ public class SDNAFileStreamReader implements FileStreamEventPublisher {
         fireReadProcessStarted();
 
         SDNAHeader header = headerReader.readHeader(config, inputStream);
+        LOGGER.info("... read header: " + header);
         fireHeaderRead(header);
 
         SDNABlockMetaData metaData;
         while (null != (metaData = metaDataReader.readMetaData(
                 config, header, inputStream))) {
-
-            LOGGER.debug("... reading: " + metaData + " ...");
 
             fireBlockMetaDataRead(metaData);
 
@@ -58,6 +59,9 @@ public class SDNAFileStreamReader implements FileStreamEventPublisher {
                 SDNACatalog catalog = catalogReader.readCatalog(
                         config, header, metaData, data);
                 fireSDNACatalogRead(catalog);
+            }
+            if (CODE_ENDBLOCK.equals(metaData.getCode())) {
+                break;
             }
         }
 

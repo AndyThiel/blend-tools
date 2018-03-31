@@ -8,6 +8,7 @@ import info.blendformat.tools.sdna.testdata.TestcaseFileMinimalCatalogBigEndian;
 import org.junit.Test;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
@@ -24,14 +25,18 @@ public class SDNAFileStreamReaderTest {
 
     @Test
     public void testFileStreamReaderLittleEndian() throws IOException {
+        ByteArrayInputStream inputStream = testcaseFileMinimalCatalog.toInputStream();
         assertCatalogTestCase(new BufferedInputStream(
-                testcaseFileMinimalCatalog.toInputStream()));
+                inputStream));
+        inputStream.close();
     }
 
     @Test
     public void testFileStreamReaderBigEndian() throws IOException {
+        ByteArrayInputStream inputStream = testcaseFileMinimalCatalogBigEndian.toInputStream();
         assertCatalogTestCase(new BufferedInputStream(
-                testcaseFileMinimalCatalogBigEndian.toInputStream()));
+                inputStream));
+        inputStream.close();
     }
 
     private void assertCatalogTestCase(BufferedInputStream inputStream)

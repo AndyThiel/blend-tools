@@ -18,5 +18,4 @@ public class SDNAParser {
                                          byte[] buffer) {
         return new JsonObject();
     }
-
 }

@@ -2,7 +2,8 @@ package info.blendformat.tools.sdna;
 
 import info.blendformat.tools.sdna.model.SDNACatalog;
 import info.blendformat.tools.sdna.model.SDNAFileContent;
-import info.blendformat.tools.sdna.reader.*;
+import info.blendformat.tools.sdna.reader.ReaderConfig;
+import info.blendformat.tools.sdna.reader.SDNAFileStreamReader;
 import info.blendformat.tools.sdna.reader.events.FileStreamEventSubscriber;
 import info.blendformat.tools.sdna.reader.events.SDNACatalogSubscriber;
 import info.blendformat.tools.sdna.reader.events.SDNAFileContentSubscriber;
@@ -29,7 +30,14 @@ public class SDNAFileReader {
 
     public SDNAFileContent read(ReaderConfig config,
                                 File fileHandle) throws IOException {
-        return read(config, new FileInputStream(fileHandle));
+        FileInputStream inputStream = new FileInputStream(fileHandle);
+        SDNAFileContent result = read(config, inputStream);
+        try {
+            inputStream.close();
+        } catch (IOException e) {
+            LOGGER.warn("Closing the file input stream did not work.");
+        }
+        return result;
     }
 
     public SDNAFileContent read(ReaderConfig config,
@@ -51,7 +59,14 @@ public class SDNAFileReader {
 
     public SDNACatalog extractCatalog(ReaderConfig config,
                                       File fileHandle) throws IOException {
-        return extractCatalog(config, new FileInputStream(fileHandle));
+        FileInputStream inputStream = new FileInputStream(fileHandle);
+        SDNACatalog catalog = extractCatalog(config, inputStream);
+        try {
+            inputStream.close();
+        } catch (IOException e) {
+            LOGGER.warn("Closing the file input stream did not work.");
+        }
+        return catalog;
     }
 
     public SDNACatalog extractCatalog(ReaderConfig config,
@@ -92,10 +107,5 @@ public class SDNAFileReader {
         fileStreamReader.addSubscriber(subscriber);
         fileStreamReader.readFile(config, inputStream);
         fileStreamReader.removeSubscriber(subscriber);
-        try {
-            inputStream.close();
-        } catch (IOException e) {
-            LOGGER.warn("Closing the buffered file input stream did not work.");
-        }
     }
 }
