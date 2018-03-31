@@ -37,27 +37,35 @@ public class SDNAFileStreamReader implements FileStreamEventPublisher {
     public void readFile(ReaderConfig config,
                          BufferedInputStream inputStream) throws IOException {
 
+        LOGGER.info("... readFile called");
+
         final String catalogCode = config.getCatalogCode();
+        LOGGER.trace("... catalog code: " + catalogCode);
 
         fireReadProcessStarted();
 
         SDNAHeader header = headerReader.readHeader(config, inputStream);
-        LOGGER.info("... read header: " + header);
+
+        LOGGER.debug("... read header: " + header);
         fireHeaderRead(header);
 
         SDNABlockMetaData metaData;
         while (null != (metaData = metaDataReader.readMetaData(
                 config, header, inputStream))) {
 
+            LOGGER.trace("... read meta data: " + metaData);
             fireBlockMetaDataRead(metaData);
 
             byte[] data = dataReader.readData(metaData, inputStream);
+
+            LOGGER.trace(String.format("... read data: %d bytes",
+                    data.length));
             fireBlockDataRead(metaData, data);
 
             if (catalogCode.equals(metaData.getCode())) {
-                LOGGER.debug("... calling catalogReader.readCatalog ...");
                 SDNACatalog catalog = catalogReader.readCatalog(
                         config, header, metaData, data);
+                LOGGER.debug("... read catalog: " + catalog);
                 fireSDNACatalogRead(catalog);
             }
             if (CODE_ENDBLOCK.equals(metaData.getCode())) {

@@ -133,7 +133,7 @@ public class SDNAFileReaderTest {
         }
 
         JsonObject extendedHeaderValues = header.getExtendedHeaderValues();
-        LOGGER.info("Extended Header Values: "+extendedHeaderValues);
+        LOGGER.debug("Extended Header Values: "+extendedHeaderValues);
         JsonArray version = extendedHeaderValues.get("version").getAsJsonArray();
         assertEquals('2', version.get(0).getAsCharacter());
         assertEquals('7', version.get(1).getAsCharacter());
