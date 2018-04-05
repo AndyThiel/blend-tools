@@ -8,8 +8,21 @@ import java.util.ArrayList;
 
 public class FileStreamEventPublisherFileContent implements FileStreamEventPublisher {
 
+    private final ArrayList<FileBlockEventSubscriber> blockSubscribers
+            = new ArrayList<>();
+
     private final ArrayList<FileStreamEventSubscriber> subscribers
             = new ArrayList<>();
+
+    @Override
+    public void addSubscriber(FileBlockEventSubscriber subscsriber) {
+        blockSubscribers.add(subscsriber);
+    }
+
+    @Override
+    public void removeSubscriber(FileBlockEventSubscriber subscsriber) {
+        blockSubscribers.remove(subscsriber);
+    }
 
     @Override
     public void addSubscriber(FileStreamEventSubscriber subscsriber) {
@@ -37,6 +50,9 @@ public class FileStreamEventPublisherFileContent implements FileStreamEventPubli
 
     @Override
     public void fireBlockMetaDataRead(SDNABlockMetaData metaData) {
+        for (FileBlockEventSubscriber subscriber : blockSubscribers) {
+            subscriber.onBlockMetaDataRead(metaData);
+        }
         for (FileStreamEventSubscriber subscriber : subscribers) {
             subscriber.onBlockMetaDataRead(metaData);
         }
@@ -44,6 +60,9 @@ public class FileStreamEventPublisherFileContent implements FileStreamEventPubli
 
     @Override
     public void fireBlockDataRead(SDNABlockMetaData metaData, byte[] data) {
+        for (FileBlockEventSubscriber subscriber : blockSubscribers) {
+            subscriber.onBlockDataRead(metaData, data);
+        }
         for (FileStreamEventSubscriber subscriber : subscribers) {
             subscriber.onBlockDataRead(metaData, data);
         }

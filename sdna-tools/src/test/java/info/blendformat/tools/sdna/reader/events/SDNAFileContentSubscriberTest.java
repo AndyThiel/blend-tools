@@ -20,6 +20,7 @@ public class SDNAFileContentSubscriberTest {
 
         SDNAFileContentSubscriber subscriber = new SDNAFileContentSubscriber();
         publisher.addSubscriber(subscriber);
+
         publisher.fireReadProcessStarted();
 
         SDNAHeader header = new SDNAHeader();
@@ -48,6 +49,7 @@ public class SDNAFileContentSubscriberTest {
         catalog.registerSize("ufloat", 12);
         publisher.fireSDNACatalogRead(catalog);
         publisher.fireReadProcessComplete();
+
         publisher.removeSubscriber(subscriber);
 
         SDNAFileContent fileContent = subscriber.getFileContent();

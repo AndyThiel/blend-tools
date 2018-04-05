@@ -1,19 +1,13 @@
 package info.blendformat.tools.sdna.reader.events;
 
-import info.blendformat.tools.sdna.model.SDNABlockMetaData;
 import info.blendformat.tools.sdna.model.SDNACatalog;
 import info.blendformat.tools.sdna.model.SDNAHeader;
 
-public interface FileStreamEventSubscriber {
+public interface FileStreamEventSubscriber extends FileBlockEventSubscriber {
 
     void onReadProcessStarted();
 
     void onHeaderRead(SDNAHeader header);
-
-    void onBlockMetaDataRead(SDNABlockMetaData metaData);
-
-    void onBlockDataRead(SDNABlockMetaData metaData,
-                         byte[] data);
 
     void onSDNACatalogRead(SDNACatalog catalog);
 

@@ -12,6 +12,18 @@ public class SDNACatalog implements Serializable {
     private final HashMap<String, SDNAStructDescriptor> typeStructDescriptorMap
             = new HashMap<>();
 
+    public HashMap<Integer, String> getIndexStructMap() {
+        return indexStructMap;
+    }
+
+    public HashMap<String, Integer> getTypeSizeMap() {
+        return typeSizeMap;
+    }
+
+    public HashMap<String, SDNAStructDescriptor> getTypeStructDescriptorMap() {
+        return typeStructDescriptorMap;
+    }
+
     public String getStruct(Integer index) {
         return indexStructMap.get(index);
     }

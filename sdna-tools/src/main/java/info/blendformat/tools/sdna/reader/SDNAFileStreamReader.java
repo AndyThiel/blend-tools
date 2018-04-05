@@ -3,6 +3,7 @@ package info.blendformat.tools.sdna.reader;
 import info.blendformat.tools.sdna.model.SDNABlockMetaData;
 import info.blendformat.tools.sdna.model.SDNACatalog;
 import info.blendformat.tools.sdna.model.SDNAHeader;
+import info.blendformat.tools.sdna.reader.events.FileBlockEventSubscriber;
 import info.blendformat.tools.sdna.reader.events.FileStreamEventPublisher;
 import info.blendformat.tools.sdna.reader.events.FileStreamEventSubscriber;
 import info.blendformat.tools.sdna.reader.types.SDNAFileBlockDataReader;
@@ -21,6 +22,9 @@ public class SDNAFileStreamReader implements FileStreamEventPublisher {
     private static final Logger LOGGER = LoggerFactory.getLogger(SDNAFileStreamReader.class);
 
     private static final String CODE_ENDBLOCK = "ENDB";
+
+    private final ArrayList<FileBlockEventSubscriber> blockSubscribers
+            = new ArrayList<>();
 
     private final ArrayList<FileStreamEventSubscriber> subscribers
             = new ArrayList<>();
@@ -62,18 +66,28 @@ public class SDNAFileStreamReader implements FileStreamEventPublisher {
                     data.length));
             fireBlockDataRead(metaData, data);
 
-            if (catalogCode.equals(metaData.getCode())) {
+            if (CODE_ENDBLOCK.equals(metaData.getCode())) {
+                break;
+            } else if (catalogCode.equals(metaData.getCode())) {
                 SDNACatalog catalog = catalogReader.readCatalog(
                         config, header, metaData, data);
                 LOGGER.debug("... read catalog: " + catalog);
                 fireSDNACatalogRead(catalog);
             }
-            if (CODE_ENDBLOCK.equals(metaData.getCode())) {
-                break;
-            }
+
         }
 
         fireReadProcessComplete();
+    }
+
+    @Override
+    public void addSubscriber(FileBlockEventSubscriber subscsriber) {
+        blockSubscribers.add(subscsriber);
+    }
+
+    @Override
+    public void removeSubscriber(FileBlockEventSubscriber subscsriber) {
+        blockSubscribers.remove(subscsriber);
     }
 
     @Override
@@ -102,6 +116,9 @@ public class SDNAFileStreamReader implements FileStreamEventPublisher {
 
     @Override
     public void fireBlockMetaDataRead(SDNABlockMetaData metaData) {
+        for (FileBlockEventSubscriber subscriber : subscribers) {
+            subscriber.onBlockMetaDataRead(metaData);
+        }
         for (FileStreamEventSubscriber subscriber : subscribers) {
             subscriber.onBlockMetaDataRead(metaData);
         }
@@ -109,6 +126,9 @@ public class SDNAFileStreamReader implements FileStreamEventPublisher {
 
     @Override
     public void fireBlockDataRead(SDNABlockMetaData metaData, byte[] data) {
+        for (FileBlockEventSubscriber subscriber : subscribers) {
+            subscriber.onBlockDataRead(metaData, data);
+        }
         for (FileStreamEventSubscriber subscriber : subscribers) {
             subscriber.onBlockDataRead(metaData, data);
         }

@@ -12,6 +12,14 @@ public class FileStreamEventPublisherSDNACatalog implements FileStreamEventPubli
             = new ArrayList<>();
 
     @Override
+    public void addSubscriber(FileBlockEventSubscriber subscsriber) {
+    }
+
+    @Override
+    public void removeSubscriber(FileBlockEventSubscriber subscsriber) {
+    }
+
+    @Override
     public void addSubscriber(FileStreamEventSubscriber subscriber) {
         subscribers.add(subscriber);
     }

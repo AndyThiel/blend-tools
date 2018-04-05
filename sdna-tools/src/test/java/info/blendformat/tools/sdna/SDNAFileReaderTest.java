@@ -1,7 +1,6 @@
 package info.blendformat.tools.sdna;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import info.blendformat.tools.sdna.defaults.DefaultCatalogPrimitives;
 import info.blendformat.tools.sdna.model.*;
@@ -133,7 +132,7 @@ public class SDNAFileReaderTest {
         }
 
         JsonObject extendedHeaderValues = header.getExtendedHeaderValues();
-        LOGGER.debug("Extended Header Values: "+extendedHeaderValues);
+        LOGGER.debug("Extended Header Values: " + extendedHeaderValues);
         JsonArray version = extendedHeaderValues.get("version").getAsJsonArray();
         assertEquals('2', version.get(0).getAsCharacter());
         assertEquals('7', version.get(1).getAsCharacter());
